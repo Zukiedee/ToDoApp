@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="dark_blue_1">#132742</color>
+    <color name="dak_blue_2">#18304C</color>
+    <color name="dak_blue_3">#25314B</color>
+    <color name="blue_gray_1">#56667D</color>
+    <color name="blue_gray_2">#577D92</color>
+    <color name="blue_gray_3">#8CA5AD</color>
+    <color name="ice_blue_1">#CAD5DC</color>
+    <color name="ice_blue_2">#CED4D7</color>
+    <color name="gray">#9395A2</color>
+    <color name="light_gray">@android:color/darker_gray</color>
+
+    <color name="pink_1">#FFB5B6</color>
+    <color name="pink_2">#FFCCCB</color>
+    <color name="pink_3">#FFD5D6</color>
+    <color name="pink_4">#F4E7E7</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="color_primary">#577D92</color>
+    <color name="color_accent">#FFB5B6</color>
+    <color name="color_primaryDark">#132742</color>
+    <color name="light_grey">#CED4D7</color>
+</resources>

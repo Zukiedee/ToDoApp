@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">To Do App</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="hint_enter_new_task">Enter new task</string>
+    <string name="button_save_new_task">Save</string>
+    <string name="no_tasks_yet">No tasks yet</string>
+    <string name="description_floating_action_button">Add new task floating action button</string>
+    <string name="font_app">serif-monospace</string>
+    <string name="font_app_plain">sans-serif</string>
+    <string name="app_author">by Zukiswa</string>
+    <string name="description_app_decoration">corner stars decoration</string>
+    <string name="default_task">This is a task</string>
+</resources>
