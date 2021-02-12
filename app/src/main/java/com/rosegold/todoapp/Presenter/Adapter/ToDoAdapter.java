@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +21,15 @@ import com.rosegold.todoapp.Model.DataBaseHelper;
 
 import java.util.List;
 
+/**
+ * To DO List Adapter
+ */
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> {
 
     private List<ToDoModel> tasksList;
     private final MainActivity activity;
     private final DataBaseHelper taskDB;
-    private TextView nudge;
+    private final TextView nudge;
 
     /**
      * Constructor Method
@@ -52,9 +56,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         holder.checkBox.setText(item.getTask());
         holder.checkBox.setChecked(toBoolean(item.getStatus()));
         fillCheckbox(toBoolean(item.getStatus()), holder, item);
-        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            fillCheckbox(isChecked, holder, item);
-        });
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> fillCheckbox(isChecked, holder, item));
     }
 
     /**
@@ -98,10 +100,16 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         ToDoModel item = tasksList.get(position);
         taskDB.deleteTask(item.getId());
         tasksList.remove(position);
+        Toast.makeText(activity.getApplicationContext(), "Task deleted", Toast.LENGTH_SHORT).show();
         notifyItemRemoved(position);
+        notifyDataSetChanged();
         empty(tasksList);
     }
 
+    /**
+     * Changes task item's description in DB
+     * @param position task position
+     */
     public void editItem(int position){
         ToDoModel item = tasksList.get(position);
 
@@ -112,9 +120,16 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         AddTask task = new AddTask();
         task.setArguments(bundle);
         task.show(activity.getSupportFragmentManager() , task.getTag());
+        notifyDataSetChanged();
 
     }
 
+    /**
+     * colours in checkbox if status is checked
+     * @param isChecked task checked status
+     * @param holder placeholder for checkbox in list item
+     * @param item task object
+     */
     private void fillCheckbox(boolean isChecked, MyViewHolder holder, ToDoModel item){
         if (isChecked){
             holder.checkBox.setPaintFlags(holder.checkBox.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);

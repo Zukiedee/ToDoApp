@@ -1,19 +1,13 @@
 package com.rosegold.todoapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
-import com.rosegold.todoapp.Presenter.Adapter.ToDoAdapter;
-import com.rosegold.todoapp.Model.ToDoModel;
-import com.rosegold.todoapp.Model.DataBaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.rosegold.todoapp.Model.DataBaseHelper;
+import com.rosegold.todoapp.Model.ToDoModel;
+import com.rosegold.todoapp.Presenter.Adapter.ToDoAdapter;
 import com.rosegold.todoapp.View.AddTask;
 import com.rosegold.todoapp.View.RecyclerViewTouchHelper;
 import com.rosegold.todoapp.View.onDialogCloseListener;
@@ -21,6 +15,11 @@ import com.rosegold.todoapp.View.onDialogCloseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity implements onDialogCloseListener {
     private DataBaseHelper taskDB;
@@ -48,12 +47,7 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
         adapter.setTasks(taskList);
 
         //add new task
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddTask.newInstance().show(getSupportFragmentManager() , AddTask.TAG);
-            }
-        });
+        fab.setOnClickListener(v -> AddTask.newInstance().show(getSupportFragmentManager() , AddTask.TAG));
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerViewTouchHelper(adapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }

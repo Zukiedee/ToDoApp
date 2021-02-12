@@ -6,12 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
-import com.rosegold.todoapp.Model.ToDoModel;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
 
 /**
  * SQLite Database
@@ -120,7 +118,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
         }finally {
             db.endTransaction();
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         return modelList;
     }
@@ -153,7 +153,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
         }finally {
             db.endTransaction();
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         return modelList;
     }
@@ -186,7 +188,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
         }finally {
             db.endTransaction();
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         return modelList;
     }

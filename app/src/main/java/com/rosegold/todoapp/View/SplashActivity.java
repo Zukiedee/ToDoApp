@@ -12,10 +12,10 @@ import com.rosegold.todoapp.MainActivity;
 import com.rosegold.todoapp.R;
 
 /**
- * Splash Screen displayed on on app start with app name runs for 2 seconds
+ * Splash Screen displayed on on app start with app name runs for 0.5 seconds
  */
 public class SplashActivity extends AppCompatActivity {
-    private int time = 3000;
+    private int time = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

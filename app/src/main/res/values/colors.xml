@@ -24,4 +24,6 @@
     <color name="color_accent">#FFB5B6</color>
     <color name="color_primaryDark">#132742</color>
     <color name="light_grey">#CED4D7</color>
+
+    <color name="design_default_color_error">#B00020</color>
 </resources>
