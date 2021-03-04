@@ -6,31 +6,14 @@
     android:padding="15dp">
 
     <EditText
-        android:layout_width="0dp"
-        android:layout_weight="3"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/inputText"
         android:textSize="@dimen/default_font_size"
         android:background="@drawable/add_task_background"
         android:fontFamily="@string/font_app_plain"
-        android:paddingStart="8dp"
-        android:paddingEnd="2dp"
+        android:padding="15sp"
         android:hint="@string/hint_enter_new_task"
         android:importantForAutofill="no" />
-
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="45dp"
-        android:text="@string/button_save_new_task"
-        android:padding="5dp"
-        android:enabled="false"
-        android:layout_marginStart="4dp"
-        android:fontFamily="@string/font_app_plain"
-        android:background="@drawable/rounded_active_button"
-        android:textColor="@color/white"
-        android:textSize="@dimen/default_font_size"
-        android:textAllCaps="true"
-        android:id="@+id/button_save" />
 
 </LinearLayout>

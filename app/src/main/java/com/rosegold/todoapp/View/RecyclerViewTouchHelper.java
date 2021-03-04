@@ -2,7 +2,9 @@ package com.rosegold.todoapp.View;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.rosegold.todoapp.Presenter.Adapter.ToDoAdapter;
 import com.rosegold.todoapp.R;
 

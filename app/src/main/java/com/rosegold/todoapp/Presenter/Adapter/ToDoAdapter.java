@@ -1,24 +1,27 @@
 package com.rosegold.todoapp.Presenter.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.rosegold.todoapp.View.AddTask;
 import com.rosegold.todoapp.MainActivity;
 import com.rosegold.todoapp.Model.ToDoModel;
 import com.rosegold.todoapp.R;
 import com.rosegold.todoapp.Model.DataBaseHelper;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -100,10 +103,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         ToDoModel item = tasksList.get(position);
         taskDB.deleteTask(item.getId());
         tasksList.remove(position);
-        Toast.makeText(activity.getApplicationContext(), "Task deleted", Toast.LENGTH_SHORT).show();
         notifyItemRemoved(position);
         notifyDataSetChanged();
         empty(tasksList);
+        setMsg("Task Deleted");
     }
 
     /**
@@ -117,11 +120,35 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         bundle.putInt("id" , item.getId());
         bundle.putString("task" , item.getTask());
 
-        AddTask task = new AddTask();
-        task.setArguments(bundle);
-        task.show(activity.getSupportFragmentManager() , task.getTag());
-        notifyDataSetChanged();
+        String task = bundle.getString("task");
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.add_newtask, null);
+        EditText newTask = view.findViewById(R.id.inputText);
+        newTask.setText(task);
+
+        builder.setView(view)
+                .setTitle("Add task")
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String text = newTask.getText().toString();
+
+                        taskDB.updateTask(item.getId(), text);
+                        tasksList = taskDB.getAllTasks();
+                        Collections.reverse(tasksList);
+                        setTasks(tasksList);
+
+                        setMsg("Task Updated!");
+                    }
+                });
+        builder.create().show();
     }
 
     /**
@@ -147,9 +174,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         CheckBox checkBox;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             checkBox = itemView.findViewById(R.id.checkbox);
         }
+    }
+
+    public void setMsg(String msg){
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }
