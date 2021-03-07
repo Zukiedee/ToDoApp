@@ -1,15 +1,13 @@
 package com.rosegold.todoapp.Presenter.Adapter;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +18,8 @@ import com.rosegold.todoapp.MainActivity;
 import com.rosegold.todoapp.Model.ToDoModel;
 import com.rosegold.todoapp.R;
 import com.rosegold.todoapp.Model.DataBaseHelper;
+import com.rosegold.todoapp.View.AddTask;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -119,36 +117,9 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         Bundle bundle = new Bundle();
         bundle.putInt("id" , item.getId());
         bundle.putString("task" , item.getTask());
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(getContext()).inflate(R.layout.add_newtask, null);
 
-        String task = bundle.getString("task");
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.add_newtask, null);
-        EditText newTask = view.findViewById(R.id.inputText);
-        newTask.setText(task);
-
-        builder.setView(view)
-                .setTitle("Add task")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String text = newTask.getText().toString();
-
-                        taskDB.updateTask(item.getId(), text);
-                        tasksList = taskDB.getAllTasks();
-                        Collections.reverse(tasksList);
-                        setTasks(tasksList);
-
-                        setMsg("Task Updated!");
-                    }
-                });
-        builder.create().show();
+        new AddTask(getContext(), view, taskDB, ToDoAdapter.this, bundle);
     }
 
     /**

@@ -12,10 +12,10 @@ import com.rosegold.todoapp.MainActivity;
 import com.rosegold.todoapp.R;
 
 /**
- * Splash Screen displayed on on app start with app name runs for 0.5 seconds
+ * Splash Screen displayed on on app start with app name runs for 0.4 seconds
  */
 public class SplashActivity extends AppCompatActivity {
-    private int time = 500;
+    private int time = 400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,9 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                finish();
-            }
+        handler.postDelayed(() -> {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            finish();
         }, time);
 
     }

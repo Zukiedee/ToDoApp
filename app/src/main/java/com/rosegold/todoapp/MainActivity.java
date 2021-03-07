@@ -1,65 +1,37 @@
 package com.rosegold.todoapp;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.rosegold.todoapp.Model.DataBaseHelper;
-import com.rosegold.todoapp.Model.ToDoModel;
-import com.rosegold.todoapp.Presenter.Adapter.ToDoAdapter;
-import com.rosegold.todoapp.View.RecyclerViewTouchHelper;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.rosegold.todoapp.Model.DataBaseHelper;
+import com.rosegold.todoapp.Model.ToDoModel;
+import com.rosegold.todoapp.Presenter.Adapter.ToDoAdapter;
+import com.rosegold.todoapp.View.AddTask;
+import com.rosegold.todoapp.View.RecyclerViewTouchHelper;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private DataBaseHelper taskDB;
     private List<ToDoModel> taskList;
     private ToDoAdapter adapter;
-    private EditText newTask;
     private RecyclerView recyclerView;
 
-    public void openDialog (){
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        View view = getLayoutInflater().inflate(R.layout.add_newtask, null);
-
-        builder.setView(view)
-                .setTitle("Add task")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String text = newTask.getText().toString();
-
-                        ToDoModel item = new ToDoModel();
-                        item.setTask(text);
-                        item.setStatus(0);
-                        taskDB.insertTask(item);
-                        taskList = taskDB.getAllTasks();
-                        Collections.reverse(taskList);
-                        adapter.setTasks(taskList);
-
-                        setMsg("Task Added");
-                    }
-                });
-        newTask = view.findViewById(R.id.inputText);
-        builder.create().show();
+    public void addTask (){
+        @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.add_newtask, null);
+        new AddTask(MainActivity.this, view, taskDB, adapter, null);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,19 +53,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.setTasks(taskList);
 
         //add new task
-        fab.setOnClickListener(view -> openDialog());
+        fab.setOnClickListener(view -> addTask());
+        //handles task swipe left and right actions
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerViewTouchHelper(adapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-
-    public void updateTasks() {
-        taskList = taskDB.getAllTasks();
-        Collections.reverse(taskList);
-        adapter.setTasks(taskList);
-        adapter.notifyDataSetChanged();
-    }
-
-    public void setMsg(String msg){
-        Snackbar.make(recyclerView, msg, Snackbar.LENGTH_SHORT).show();
     }
 }
